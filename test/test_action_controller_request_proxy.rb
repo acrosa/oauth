@@ -25,4 +25,11 @@ class ActionControllerRequestProxyTest < Test::Unit::TestCase
       request_proxy({ :foo => [123, 456] }).parameters_for_signature.sort
     )
   end
+  
+  def test_parameter_keys_should_preserve_ampersands_from_hash
+    assert_equal(
+      [["message[body]", "This text has an & and = sign"]],
+      request_proxy({ :message => { :body => 'This text has an & and = sign' }}).parameters_for_signature
+    )
+  end
 end
